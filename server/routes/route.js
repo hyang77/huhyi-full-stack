@@ -21,7 +21,8 @@ router.post("/", async (req, res) => {
   const product = new Product({
     name: req.body.name,
     category: req.body.category,
-    description: req.body.description,
+    image: req.body.image,
+    description: req.body.description
   });
 
   console.log(req.body);
