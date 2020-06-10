@@ -15,7 +15,9 @@ import HomePage from "./components/HomePage";
 import Product from "./components/Product";
 import Contact from "./components/Contact";
 import Search from "./components/Search";
-
+import AddProduct from "./components/AddProduct";
+import EditProduct from "./components/EditProduct";
+import ProductList from "./components/ProductList";
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -108,6 +110,7 @@ class App extends React.Component {
                     </Link>
                   </form>
                 </nav>
+
                 <Switch>
                   <Route path="/product">
                     <Product searchInput={this.state.searchInput} />
@@ -118,6 +121,16 @@ class App extends React.Component {
                   >
                   <Route exact path="/">
                     <HomePage />
+                  </Route>
+                  {/* route for create, edit, delete and show product */}
+                  <Route exact path="/add">
+                    <AddProduct />
+                  </Route>
+                  <Route exact path="/edit">
+                    <EditProduct />
+                  </Route>
+                  <Route exact path="/list">
+                    <ProductList />
                   </Route>
                 </Switch>
               </header>
