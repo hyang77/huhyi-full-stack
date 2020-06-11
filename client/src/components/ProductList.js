@@ -1,22 +1,30 @@
-import React from "react";
-import axios from 'axios';
-class ProductList extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-  componentDidMount() {
-    fetch("http://localhost:3000/api/products")
-      .then((result) => {
-        return result.json();
-      })
-      .then((data) => console.log(data));
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+function ProductList(props) {
+  const [products, setProduct] = useState([]);
 
-    const url = "http://localhost:3000/api/products";
-    axios.get(url).then((response) => console.log(response.data[0]));
-  }
-  render() {
-    return null;
-  }
+  useEffect(() => {
+    const fetchData = async () => {
+      const { data } = await axios.get("http://localhost:3000/api/products");
+      setProduct(data);
+      console.log(data);
+    };
+    fetchData();
+  }, []);
+
+  return (
+    <React.Fragment>
+      <div className="title chair-title">折合椅</div>
+      <div className="items chair-items">
+        {products.map((product) => (
+          <div>
+            <img key={product._id} src={product.image} alt={product.name} />
+            <p>{product.name}</p>
+          </div>
+        ))}
+      </div>
+    </React.Fragment>
+  );
 }
 
 export default ProductList;
