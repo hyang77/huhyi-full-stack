@@ -18,6 +18,7 @@ import Search from "./components/Search";
 import AddProduct from "./components/AddProduct";
 import EditProduct from "./components/EditProduct";
 import ProductList from "./components/ProductList";
+import axios from "axios";
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -41,16 +42,6 @@ class App extends React.Component {
     const companyName = {
       english: "HUH-YI Enterprise Co.,Ltd",
       mandarin: "互怡企業",
-    };
-    /*
-    const product = {
-      english: {chair:["Folding Chair","Public Line Chair"],desk:["Executive","Meeting", Office["CD Desk"],"screen"]
-    };
-    */
-    const product = {
-      chair: ["Folding Chair", "Public Line Chair"],
-      desks: ["Office Desk", "Meeting Table", "Executive Desk"],
-      screens: ["Screens"],
     };
 
     return (
