@@ -14,11 +14,15 @@ function ProductList(props) {
 
   return (
     <React.Fragment>
-      <div className="title chair-title">折合椅</div>
+      <div className="title chair-title">排椅</div>
       <div className="items chair-items">
         {products.map((product) => (
           <div>
-            <img key={product._id} src={product.image} alt={product.name} />
+            <img
+              key={product._id}
+              src={require(`C:/Users/uee85/OneDrive/Desktop/huhyi-products/${product.image}`)}
+              alt={product.name}
+            />
             <p>{product.name}</p>
           </div>
         ))}

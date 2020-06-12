@@ -104,12 +104,11 @@ class App extends React.Component {
 
                 <Switch>
                   <Route path="/product">
-                    <Product searchInput={this.state.searchInput} />
+                    <ProductList />
                   </Route>
                   <Route path="/contact">
                     <Contact />
                   </Route>
-                  >
                   <Route exact path="/">
                     <HomePage />
                   </Route>
@@ -119,9 +118,6 @@ class App extends React.Component {
                   </Route>
                   <Route exact path="/edit">
                     <EditProduct />
-                  </Route>
-                  <Route exact path="/list">
-                    <ProductList />
                   </Route>
                 </Switch>
               </header>
