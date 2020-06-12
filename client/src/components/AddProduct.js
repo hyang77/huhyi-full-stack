@@ -1,105 +1,88 @@
-import React from "react";
+import React, { useState } from "react";
+import axios from "axios";
 
-class AddProduct extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      name: "",
-      category: "",
-      description: "",
-    };
+function AddProduct() {
+  const [addProduct, setAddProduct] = useState({
+    name: "",
+    category: "",
+    image: "",
+    description: "",
+  });
 
-    //setting up functions
-    this.onChangeProductName = this.onChangeProductName.bind(this);
-    this.onChangeProductCategory = this.onChangeProductCategory.bind(this);
-    this.onChangeProductDescription = this.onChangeProductDescription.bind(
-      this
-    );
-    this.onSubmit = this.onSubmit.bind(this);
-  }
+  const handleChange = (evt) => {
+    setAddProduct({ ...addProduct, [evt.target.name]: evt.target.value });
+  };
 
-  onChangeProductName(e) {
-    this.setState({ name: e.target.value });
-  }
+  const handleSubmit = (evt) => {
+    evt.preventDefault();
+    axios
+      .post("http://localhost:3000/api/products", addProduct)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
-  onChangeProductCategory(e) {
-    this.setState({ category: e.target.value });
-  }
-
-  onChangeProductDescription(e) {
-    this.setState({ description: e.target.value });
-  }
-
-  onSubmit(e) {
-    e.preventDefault();
-
-    console.log(`Product successfully created!`);
-    console.log(`Name: ${this.state.name}`);
-    console.log(`Category: ${this.state.category}`);
-    console.log(`Description: ${this.state.description}`);
-
-    this.setState({ name: "", category: "", description: "" });
-  }
-
-  render() {
-    const styles = {
-      margin: "0 auto",
-      padding: "2em",
-      display: "flex",
-      flexDirection: "column",
-      justifyContent: "center",
-    };
-    return (
-      <React.Fragment>
-        <div style={styles}>
-          <h1>Add Product</h1>
-          <form style={styles}>
-            <div className="form-group">
-              <label className="visible">Product Name</label>
-              <input
-                type="text"
-                className="form-control "
-                value={this.state.name}
-                onChange={this.onChangeProductName}
-              />
-            </div>
-            <div className="form-group">
-              <label className="visible">Category</label>
-              <input
-                type="text"
-                className="form-control"
-                value={this.state.category}
-                onChange={this.onChangeProductCategory}
-              />
-            </div>
-            <div className="form-group">
-              <label className="visible">Description</label>
-              <input
-                type="text"
-                className="form-control"
-                value={this.state.description}
-                onChange={this.onChangeProductDescription}
-              />
-            </div>
-            <button
-              type="submit"
-              className="btn btn-primary"
-              onChange={this.onSubmit}
-            >
-              Create
-            </button>
-          </form>
-          {/**
-           * testing f the value has been updated
-           * <div>
-            {this.state.name}{this.state.category}{this.state.description}
+  const styles = {
+    margin: "0 auto",
+    padding: "2em",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+  };
+  return (
+    <React.Fragment>
+      <div style={styles}>
+        <h1>Add Product</h1>
+        <form style={styles} onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label className="visible">Product Name</label>
+            <input
+              type="text"
+              className="form-control"
+              name="name"
+              value={addProduct.name}
+              onChange={handleChange}
+            />
           </div>
-        
-           */}
-        </div>
-      </React.Fragment>
-    );
-  }
+          <div className="form-group">
+            <label className="visible">Category</label>
+            <input
+              type="text"
+              className="form-control"
+              name="category"
+              value={addProduct.category}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="form-group">
+            <label className="visible">Description</label>
+            <input
+              type="text"
+              className="form-control"
+              name="description"
+              value={addProduct.description}
+              onChange={handleChange}
+            />
+          </div>
+          <div class="form-group">
+            <label>Image Upload</label>
+            <input
+              type="file"
+              class="form-control-file"
+              id="exampleFormControlFile1"
+              onChange={handleChange}
+            />
+          </div>
+          <button type="submit" className="btn btn-primary">
+            Create
+          </button>
+        </form>
+      </div>
+    </React.Fragment>
+  );
 }
 
 export default AddProduct;
