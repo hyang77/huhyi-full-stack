@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 function AddProduct() {
   const [addProduct, setAddProduct] = useState({
@@ -35,7 +36,15 @@ function AddProduct() {
   return (
     <React.Fragment>
       <div style={styles}>
-        <h1>Add Product</h1>
+        <h1>新增產品 Add Product</h1>
+        <div className="d-flex justify-content-end">
+          <Link to="/list">
+            <button type="button" className="btn btn-success btn-sm ">
+              <i className="fa fa-list-ul mr-2" aria-hidden="true"></i>瀏覽產品
+            </button>
+          </Link>
+        </div>
+
         <form style={styles} onSubmit={handleSubmit}>
           <div className="form-group">
             <label className="visible">Product Name</label>
@@ -71,7 +80,7 @@ function AddProduct() {
             <label>Image Upload</label>
             <input
               type="file"
-              class="form-control-file"
+              className="form-control-file"
               id="exampleFormControlFile1"
               onChange={handleChange}
             />

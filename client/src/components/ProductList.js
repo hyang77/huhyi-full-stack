@@ -18,12 +18,13 @@ function ProductList(props) {
       <div className="items chair-items">
         {products.map((product) => (
           <div>
-            <img
+           {/** <img
               key={product._id}
               src={require(`C:/Users/uee85/OneDrive/Desktop/huhyi-products/${product.image}`)}
               alt={product.name}
-            />
+            /> */}
             <p>{product.name}</p>
+        <p>{product._id}</p>
           </div>
         ))}
       </div>

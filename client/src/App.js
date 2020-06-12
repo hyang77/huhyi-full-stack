@@ -14,11 +14,10 @@ import ScrollToTop from "./components/ScrollToTop";
 import HomePage from "./components/HomePage";
 import Product from "./components/Product";
 import Contact from "./components/Contact";
-import Search from "./components/Search";
 import AddProduct from "./components/AddProduct";
 import EditProduct from "./components/EditProduct";
 import ProductList from "./components/ProductList";
-import axios from "axios";
+import List from "./components/List";
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -119,6 +118,10 @@ class App extends React.Component {
                   <Route exact path="/edit">
                     <EditProduct />
                   </Route>
+                  <Route exact path="/list">
+                    <List />
+                  </Route>
+
                 </Switch>
               </header>
             </div>

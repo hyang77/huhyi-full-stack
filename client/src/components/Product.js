@@ -118,10 +118,6 @@ class Product extends React.Component {
               <Route exact path="/product/chairs"></Route>
               <Route exact path="/product/desks"></Route>
 
-              <Route path="/product/search">
-                <Search searchInput={this.props.searchInput} />
-              </Route>
-
               <Redirect from="/product" to="/product/screens" />
             </Switch>
           </div>

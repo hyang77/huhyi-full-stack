@@ -1,39 +1,70 @@
 import React from "react";
 class Search extends React.Component {
-    constructor(props){
-        super(props);
-        this.state = {test: "desks/desk-meeting/"}
-    }
-  render() {
-    const meetingDeskList = [
-      "CONF-D-N",
-      "E1860",
-      "FCT",
-      "MY-1860-1_w",
-      "MY-1860-5_w",
-      "nc180",
-    ];
+  constructor(props) {
+    super(props);
+    this.state = { disableLink: false, searchInput: "" };
+    this.handleSearchInput = this.handleSearchInput.bind(this);
+    this.handleSearchSubmit = this.handleSearchSubmit.bind(this);
+  }
 
-    const pattern = this.props.searchInput;
-    const newPattern = new RegExp(pattern, "i");
-    const filtername = meetingDeskList.filter((str) => newPattern.test(str));
+  handleSearchSubmit(e) {
+    if (this.state.searchInput === "") {
+      e.preventDefault();
+      alert("請輸入關鍵字(1-10字之間)");
+    }
+  }
+
+  handleSearchInput(e) {
+    this.setState({ searchInput: e.target.value });
+  }
+  render() {
+    const styles = {
+      margin: "0 auto",
+      padding: "2em",
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "center",
+    };
     return (
       <React.Fragment>
-        <div className="title" style={{ borderLeftColor: "transparent" }}>
-          "{this.props.searchInput}" 搜尋結果
-        </div>
-        <div className="items">
-          {filtername.map((filtername) => (
-            <div>
-              <img
-                key={filtername}
-                src={require(`../assets/images/${this.state.test}${filtername}.jpg`)}
-                alt={filtername}
+        {/** 
+        * <form className="search">
+        <input
+          className="search"
+          type="text"
+          placeholder="產品型號搜尋 Search.."
+          onChange={this.handleSearchInput}
+          value={this.state.searchInput}
+        ></input>
+        <button
+          className="search"
+          type="submit"
+          onClick={this.handleSearchSubmit}
+        >
+          <i className="search fas fa-search"></i>
+        </button>
+        <button type="button" class="btn btn-outline-primary">Primary</button>
+      </form>
+       */}
+        <div style={styles}>
+          <form style={styles}>
+            <div class="input-group mb-3">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Search products"
+                aria-label="Recipient's username"
+                aria-describedby="basic-addon2"
               />
-              <p>{filtername}</p>
+              <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="button">
+                  <i className="search fas fa-search"></i>
+                </button>
+              </div>
             </div>
-          ))}
+          </form>
         </div>
+        
       </React.Fragment>
     );
   }
