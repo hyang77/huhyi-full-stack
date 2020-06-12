@@ -22,7 +22,7 @@ router.post("/", async (req, res) => {
     name: req.body.name,
     category: req.body.category,
     image: req.body.image,
-    description: req.body.description
+    description: req.body.description,
   });
 
   console.log(req.body);
@@ -68,11 +68,11 @@ router.patch("/:id", async (req, res) => {
       { _id: req.params.id },
       {
         $set: {
-          name: req.body.name
+          name: req.body.name,
         },
       }
-    ); 
-    res.json(updateProduct)
+    );
+    res.json(updateProduct);
   } catch (err) {
     res.json({ message: err });
   }
