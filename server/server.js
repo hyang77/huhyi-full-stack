@@ -6,7 +6,7 @@ import cors from "cors";
 import productRoute from "./routes/route";
 
 const app = express();
-const port = 3000;
+const port = 4000;
 
 //middleware
 app.use(cors());
@@ -29,5 +29,5 @@ mongoose.connect(
 );
 
 app.listen(port, () => {
-  console.log("server started at http://localhost:3000");
+  console.log("server started at http://localhost:4000");
 });
