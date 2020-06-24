@@ -1,7 +1,34 @@
 import express from "express";
 import mongoose from "mongoose";
 import Product from "../models/product";
+import multer from "multer";
 const router = express.Router();
+//specify how to store the image
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "./uploads/");
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname);
+  },
+});
+const fileFilter = (req, file, cb) => {
+  //reject a file
+  if (file.mimetype === "image/jpeg" || file.mimetype === "image/png") {
+    cb(null, true);
+  } else {
+    cb(null, false);
+    console.log("upload failed");
+  }
+};
+
+const upload = multer({
+  storage: storage,
+  limits: {
+    fileSize: 1024 * 1024 * 5,
+  },
+  fileFilter: fileFilter,
+});
 
 //Routes
 //get back all the products
@@ -17,11 +44,12 @@ router.get("/", async (req, res) => {
 
 //create a product
 //submit a post
-router.post("/", async (req, res) => {
+router.post("/", upload.single("image"), async (req, res) => {
+  console.log(req.file);
   const product = new Product({
     name: req.body.name,
     category: req.body.category,
-    image: req.body.image,
+    image: req.file.originalname, //req.file.path
     description: req.body.description,
   });
 
