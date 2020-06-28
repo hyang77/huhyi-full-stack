@@ -5,7 +5,7 @@ function ProductList(props) {
 
   useEffect(() => {
     const fetchData = async () => {
-      const { data } = await axios.get("http://localhost:3000/api/products");
+      const { data } = await axios.get("http://localhost:4000/api/products");
       setProduct(data);
       console.log(data);
     };
@@ -18,13 +18,12 @@ function ProductList(props) {
       <div className="items chair-items">
         {products.map((product) => (
           <div>
-           {/** <img
+            <img
               key={product._id}
-              src={require(`C:/Users/uee85/OneDrive/Desktop/huhyi-products/${product.image}`)}
+              src={`http://localhost:4000/uploads/${product.image}`}
               alt={product.name}
-            /> */}
+            />
             <p>{product.name}</p>
-        <p>{product._id}</p>
           </div>
         ))}
       </div>

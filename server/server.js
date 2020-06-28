@@ -10,6 +10,7 @@ const port = 4000;
 
 //middleware
 app.use(cors());
+app.use('/uploads', express.static('uploads'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
