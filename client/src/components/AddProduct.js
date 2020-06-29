@@ -17,17 +17,21 @@ class AddProduct extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleOnChange = e => this.setState({ [e.target.name]: e.target.value });
+  handleOnChange = (e) => this.setState({ [e.target.name]: e.target.value });
 
-  handleOnUploadFile = e => this.setState({ image: e.target.files[0] });
+  handleOnUploadFile = (e) => this.setState({ image: e.target.files[0] });
 
   handleSubmit = (evt) => {
     evt.preventDefault();
     const formData = new FormData();
-    formData.append('name', this.state.name);
-    formData.append('category', this.state.category);
-    formData.append('image', this.state.image);
-    formData.append('description', this.state.description);
+    formData.append("name", this.state.name);
+    formData.append("category", this.state.category);
+    formData.append("image", this.state.image);
+    formData.append("description", this.state.description);
+
+    for (var [key, value] of formData.entries()) {
+      console.log(key, value);
+    }
 
     axios
       .post("http://localhost:4000/api/products", formData)
@@ -37,6 +41,15 @@ class AddProduct extends React.Component {
       .catch((error) => {
         console.log(error);
       });
+      
+    alert("資料提交完成");
+
+    this.setState({
+      name: "",
+      category: "",
+      image: "",
+      description: "",
+    });
   };
 
   render() {
