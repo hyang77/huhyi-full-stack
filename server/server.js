@@ -10,7 +10,7 @@ const port = 4000;
 
 //middleware
 app.use(cors());
-app.use('/uploads', express.static('uploads'));
+app.use("/uploads", express.static("uploads"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
@@ -22,7 +22,12 @@ app.use("/api/products", productRoute);
 const url = process.env.MY_CONNECTION;
 mongoose.connect(
   url,
-  { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true },
+  {
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false,
+  },
   function (error) {
     if (error) throw error;
     console.log(`connect mongodb success`);

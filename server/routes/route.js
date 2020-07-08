@@ -82,17 +82,17 @@ router.delete("/:id", async (req, res) => {
   console.log(req.params.id);
   console.log(req.file);
   try {
-    fs.unlink(
-      "C:\\Users\\uee85\\huhyi-full-stack\\server\\uploads\\" +
-        req.file.originalname,
-      (err) => {
-        if (err) {
-          console.log("failed to delete local image:" + err);
-        } else {
-          console.log("successfully deleted local image");
-        }
-      }
-    );
+    // fs.unlink(
+    //   "C:\\Users\\uee85\\huhyi-full-stack\\server\\uploads\\" +
+    //     req.file.originalname,
+    //   (err) => {
+    //     if (err) {
+    //       console.log("failed to delete local image:" + err);
+    //     } else {
+    //       console.log("successfully deleted local image");
+    //     }
+    //   }
+    // );
     const removeProduct = await Product.remove({ _id: req.params.id });
     res.json(removeProduct);
   } catch (err) {
@@ -101,18 +101,33 @@ router.delete("/:id", async (req, res) => {
 });
 //update a product
 //using patch method
-router.put("/:id", async (req, res) => {
+router.put("/:id", upload.single("image"), async (req, res) => {
   console.log(req.params.id);
 
   try {
     const id = req.params.id;
-    const updates = req.body;
+    const name = req.body.name;
+    const category = req.body.category;
+    const image = req.file.originalname; //req.file.path
+    const description = req.body.description;
     const options = { new: true };
 
-    const result = await Product.findByIdAndUpdate(id, updates, options);
+    const result = await Product.findByIdAndUpdate(
+      id,
+      {
+        $set: {
+          name,
+          category,
+          image,
+          description,
+        },
+      },
+      options
+    );
     res.send(result);
+    console.log("Edits submitted successfully");
   } catch (err) {
-    console.log(error.message);
+    console.log("Edits failed" + err.message);
   }
 });
 export default router;
