@@ -2,6 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import Product from "../models/product";
 import multer from "multer";
+import fs from "fs";
 const router = express.Router();
 //specify how to store the image
 const storage = multer.diskStorage({
@@ -79,30 +80,39 @@ router.get("/:id", async (req, res) => {
 //add path id param
 router.delete("/:id", async (req, res) => {
   console.log(req.params.id);
+  console.log(req.file);
   try {
+    fs.unlink(
+      "C:\\Users\\uee85\\huhyi-full-stack\\server\\uploads\\" +
+        req.file.originalname,
+      (err) => {
+        if (err) {
+          console.log("failed to delete local image:" + err);
+        } else {
+          console.log("successfully deleted local image");
+        }
+      }
+    );
     const removeProduct = await Product.remove({ _id: req.params.id });
     res.json(removeProduct);
   } catch (err) {
     res.json({ message: err });
   }
 });
-
 //update a product
 //using patch method
-router.patch("/:id", async (req, res) => {
+router.put("/:id", async (req, res) => {
   console.log(req.params.id);
+
   try {
-    const updateProduct = await Product.updateOne(
-      { _id: req.params.id },
-      {
-        $set: {
-          name: req.body.name,
-        },
-      }
-    );
-    res.json(updateProduct);
+    const id = req.params.id;
+    const updates = req.body;
+    const options = { new: true };
+
+    const result = await Product.findByIdAndUpdate(id, updates, options);
+    res.send(result);
   } catch (err) {
-    res.json({ message: err });
+    console.log(error.message);
   }
 });
 export default router;

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import EditButton from "./buttons/EditButton";
-import DeleteButton from "./buttons/DeleteButton";
 import AddButton from "./buttons/AddButton";
+import { Link } from "react-router-dom";
+
 function List(props) {
   const [products, setProduct] = useState([]);
 
@@ -16,21 +16,23 @@ function List(props) {
   }, []);
 
   const handleDelete = (id) => {
-    axios.delete(`http://localhost:4000/api/products/${id}`)
-    .then(() => {
-      // Issue GET request after item deleted to get updated list
-      // that excludes user of id
-      return axios.get("http://localhost:4000/api/products")
-    })
-    .then((res) => {
-      // Update users in state as per-usual
-      const data = res.data;
-      console.log(res.data);
-      setProduct(data);
-    })
-  
+    const result = window.confirm("確認刪除此資料?");
+    if (result == true) {
+      axios
+        .delete(`http://localhost:4000/api/products/${id}`)
+        .then(() => {
+          // Issue GET request after item deleted to get updated list
+          // that excludes user of id
+          return axios.get("http://localhost:4000/api/products");
+        })
+        .then((res) => {
+          // Update users in state as per-usual
+          const data = res.data;
+          console.log(res.data);
+          setProduct(data);
+        });
+    }
   };
-  
 
   return (
     <React.Fragment>
@@ -52,7 +54,12 @@ function List(props) {
             <div className="col border border-light">{product.category}</div>
             <div className="col border border-light">{product.description}</div>
             <div className="col border border-light">
-              <EditButton />
+              <Link to="/edit">
+                <button type="button" className="btn btn-info btn-sm mr-2">
+                  <i className="fa fa-pencil" aria-hidden="true"></i>
+                </button>
+              </Link>
+
               <button
                 type="button"
                 className="btn btn-danger btn-sm"
