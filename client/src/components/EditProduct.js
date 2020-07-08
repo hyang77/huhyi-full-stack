@@ -14,44 +14,40 @@ class EditProduct extends React.Component {
 
     this.handleOnChange = this.handleOnChange.bind(this);
     this.handleOnUploadFile = this.handleOnUploadFile.bind(this);
-    // this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleOnChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
-    console.log(this.state.name);
-    console.log(this.state.category);
-    console.log(this.state.image);
-    console.log(this.state.description);
   };
 
   handleOnUploadFile = (e) => this.setState({ image: e.target.files[0] });
 
-  // handleSubmit = (id) => {
-  //   const formData = new FormData();
-  //   formData.append("name", this.state.name);
-  //   formData.append("category", this.state.category);
-  //   formData.append("image", this.state.image);
-  //   formData.append("description", this.state.description);
+  handleSubmit = () => {
+    const id = "5f0577c6af2ce51c8cfa43ab";
+    const formData = new FormData();
+    formData.append("name", this.state.name);
+    formData.append("category", this.state.category);
+    formData.append("image", this.state.image);
+    formData.append("description", this.state.description);
 
-  //   axios
-  //     .put(`http://localhost:4000/api/products/${id}`, formData)
-  //     .then((res) => {
-  //       console.log(res.data);
-
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  //   //reset the form
-  //   document.getElementById("product-form").reset();
-  //   this.setState({
-  //     name: "",
-  //     category: "",
-  //     image: "",
-  //     description: "",
-  //   });
-  // };
+    axios
+      .put(`http://localhost:4000/api/products/${id}`, formData)
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    //reset the form
+    document.getElementById("product-form").reset();
+    this.setState({
+      name: "",
+      category: "",
+      image: "",
+      description: "",
+    });
+  };
 
   componentDidMount() {
     const fetchData = async () => {
@@ -92,7 +88,7 @@ class EditProduct extends React.Component {
             </Link>
           </div>
 
-          <form id="product-form" style={styles}>
+          <form id="product-form" style={styles} onSubmit={this.handleSubmit}>
             <div className="form-group">
               <label className="visible">產品名稱 Product Name*</label>
               <input
@@ -136,11 +132,7 @@ class EditProduct extends React.Component {
                 onChange={this.handleOnUploadFile}
               />
             </div>
-            <button
-              type="button"
-              className="btn btn-primary"
-              // onClick={(e) => this.handleSubmit('5efd8c7d262dfe5828f652bb')}
-            >
+            <button type="submit" className="btn btn-primary">
               更新 Update
             </button>
           </form>
