@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import AddButton from "./buttons/AddButton";
 import { Link } from "react-router-dom";
+import DeleteButton from "./buttons/DeleteButton";
+import EditButton from "./buttons/EditButton";
 
 function List(props) {
   const [products, setProduct] = useState([]);
@@ -54,19 +56,8 @@ function List(props) {
             <div className="col border border-light">{product.category}</div>
             <div className="col border border-light">{product.description}</div>
             <div className="col border border-light">
-              <Link to="/edit">
-                <button type="button" className="btn btn-info btn-sm mr-2">
-                  <i className="fa fa-pencil" aria-hidden="true"></i>
-                </button>
-              </Link>
-
-              <button
-                type="button"
-                className="btn btn-danger btn-sm"
-                onClick={(e) => handleDelete(product._id)}
-              >
-                <i className="fa fa-trash-o" aria-hidden="true"></i>
-              </button>
+              <EditButton />
+              <DeleteButton handleDelete={(e) => handleDelete(product._id)} />
             </div>
           </div>
         ))}
